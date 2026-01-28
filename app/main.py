@@ -3,6 +3,7 @@ from app.ingest import extract_text, embed_and_store
 from app.utils import chunk_text
 from app.rag import retrieve_chunks
 from app.models import QuestionRequest
+from app.rag import retrieve_chunks, generate_answer
 
 
 app = FastAPI()
@@ -35,7 +36,7 @@ def ask_question(request: QuestionRequest):
     if not chunks:
         return {"answer": "No relevant information found.", "sources": []}
 
-    answer = " ".join(chunks)
+    answer = generate_answer(chunks, request.question)
 
     return {
         "answer": answer,

@@ -14,3 +14,10 @@ def retrieve_chunks(query: str, top_k: int = 3):
             results.append(stored_chunks[idx])
 
     return results
+
+def generate_answer(context: list[str], question: str):
+    """
+    Placeholder for LLM-based answer generation.
+    Currently returns retrieval-grounded context.
+    """
+    return " ".join(context)
