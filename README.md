@@ -44,37 +44,35 @@ This pipeline handles user questions, semantic search, and retrieval of relevant
 git clone https://github.com/ranjan-shaurya/rag-qa-sys
 cd rag-qa-sys
 pip install -r requirements.txt
+```
 
-Run the server
+## Run the server
 uvicorn app.main:app --reload
 
-Open Swagger UI:
+## Open Swagger UI:
 http://127.0.0.1:8000/docs
 
-🔌 API Usage
-📤 Upload Document
-
+### 🔌 API Usage
+## 📤 Upload Document
 Endpoint
 POST /upload
 
-Description
+## Description
 Uploads a PDF or TXT file, extracts text, chunks it, generates embeddings, and stores them in the FAISS vector database.
 
-❓ Ask Question
-
+## ❓ Ask Question
 Endpoint
-
 POST /ask
 
 
-Request Body
+### Request Body
 
 {
   "question": "What is this document about?"
 }
 
 
-Response
+### Response
 
 {
   "answer": "...retrieved content...",
@@ -84,7 +82,7 @@ Response
 The current implementation returns retrieval-grounded answers. An LLM can be plugged into the generation layer to synthesize concise answers from retrieved context.
 
 
-🧩 Chunking Strategy (Mandatory Explanation)
+## 🧩 Chunking Strategy (Mandatory Explanation)
 A chunk size of 400 tokens with overlap was chosen to balance:
 Semantic coherence within chunks
 Retrieval precision during similarity search
@@ -92,7 +90,7 @@ Smaller chunks tended to lose contextual meaning, while larger chunks diluted re
 Overlapping chunks help preserve continuity across chunk boundaries.
 
 
-⚠️ Observed Retrieval Failure Case (Mandatory Explanation)
+## ⚠️ Observed Retrieval Failure Case (Mandatory Explanation)
 
 When ingesting large documents, synchronous embedding generation caused increased latency and occasional server errors due to memory constraints. This occurs because embedding generation is computationally expensive and scales with document size.
 
@@ -105,13 +103,13 @@ This behavior was intentionally observed and documented to highlight real-world 
 
 
 
-📊 Metric Tracked (Mandatory Explanation)
+## 📊 Metric Tracked (Mandatory Explanation)
 
 End-to-end ingestion latency was tracked during document upload, particularly during embedding generation. This metric is critical for evaluating responsiveness in document-heavy RAG systems.
 
 
 
-🚧 Limitations & Future Improvements
+## 🚧 Limitations & Future Improvements
 
 Background jobs for document ingestion
 LLM-based answer synthesis
@@ -122,7 +120,7 @@ Authentication and enhanced rate limiting
 
 
 
-📁 Repository Structure
+## 📁 Repository Structure
 rag-qa-sys/
 ├── app/
 │   ├── main.py
@@ -139,7 +137,7 @@ rag-qa-sys/
 └── architecture_query.png
 
 
-✅ Design Choices
+## ✅ Design Choices
 
 Heavy RAG frameworks were avoided to maintain transparency and control.
 Each RAG step (chunking, embedding, retrieval) is implemented explicitly.
