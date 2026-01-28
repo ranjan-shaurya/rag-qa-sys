@@ -22,11 +22,14 @@ def extract_text(file_path: str) -> str:
         raise ValueError("Unsupported file type")
     
 
-def embed_and_store(chunks: list[str]):
+def embed_and_store(chunks: list[str], batch_size: int = 32):
     """
-    Converts chunks into embeddings and stores them in FAISS.
+    Converts chunks into embeddings and stores them in FAISS in batches.
+    This reduces memory usage for large documents.
     """
-    embeddings = embedding_model.encode(chunks)
+    for i in range(0, len(chunks), batch_size):
+        batch = chunks[i : i + batch_size]
 
-    index.add(np.array(embeddings))
-    stored_chunks.extend(chunks)
+        embeddings = embedding_model.encode(batch)
+        index.add(np.array(embeddings))
+        stored_chunks.extend(batch)

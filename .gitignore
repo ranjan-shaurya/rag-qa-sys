@@ -1,3 +1,4 @@
-data/docs/
-.venv/
 __pycache__/
+*.pyc
+.venv/
+data/docs/

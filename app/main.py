@@ -1,6 +1,9 @@
 from fastapi import FastAPI, UploadFile, File
 from app.ingest import extract_text, embed_and_store
 from app.utils import chunk_text
+from app.rag import retrieve_chunks
+from app.models import QuestionRequest
+
 
 app = FastAPI()
 
@@ -23,4 +26,18 @@ def upload_document(file: UploadFile = File(...)):
     return {
         "message": "File uploaded, chunked, and embedded",
         "num_chunks": len(chunks)
+    }
+
+@app.post("/ask")
+def ask_question(request: QuestionRequest):
+    chunks = retrieve_chunks(request.question)
+
+    if not chunks:
+        return {"answer": "No relevant information found.", "sources": []}
+
+    answer = " ".join(chunks)
+
+    return {
+        "answer": answer,
+        "sources": chunks
     }
