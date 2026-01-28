@@ -1,4 +1,6 @@
 from pypdf import PdfReader
+from app.vectorstore import index, stored_chunks, embedding_model
+import numpy as np
 
 def extract_text(file_path: str) -> str:
     """
@@ -18,3 +20,13 @@ def extract_text(file_path: str) -> str:
 
     else:
         raise ValueError("Unsupported file type")
+    
+
+def embed_and_store(chunks: list[str]):
+    """
+    Converts chunks into embeddings and stores them in FAISS.
+    """
+    embeddings = embedding_model.encode(chunks)
+
+    index.add(np.array(embeddings))
+    stored_chunks.extend(chunks)

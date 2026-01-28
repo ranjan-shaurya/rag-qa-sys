@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
-from app.ingest import extract_text
+from app.ingest import extract_text, embed_and_store
 from app.utils import chunk_text
 
 app = FastAPI()
@@ -18,7 +18,9 @@ def upload_document(file: UploadFile = File(...)):
     text = extract_text(file_path)
     chunks = chunk_text(text)
 
+    embed_and_store(chunks)
+
     return {
-        "message": "File uploaded and processed",
+        "message": "File uploaded, chunked, and embedded",
         "num_chunks": len(chunks)
     }
