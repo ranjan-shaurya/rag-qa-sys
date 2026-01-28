@@ -52,8 +52,8 @@ uvicorn app.main:app --reload
 ## Open Swagger UI:
 http://127.0.0.1:8000/docs
 
-### 🔌 API Usage
-## 📤 Upload Document
+## 🔌 API Usage
+### 📤 Upload Document
 Endpoint
 POST /upload
 
@@ -121,6 +121,7 @@ Authentication and enhanced rate limiting
 
 
 ## 📁 Repository Structure
+```bash
 rag-qa-sys/
 ├── app/
 │   ├── main.py
@@ -135,6 +136,7 @@ rag-qa-sys/
 ├── README.md
 ├── architecture_ingestion.png
 └── architecture_query.png
+```
 
 
 ## ✅ Design Choices
